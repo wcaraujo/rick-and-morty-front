@@ -1,33 +1,80 @@
-<p>personagens-page works!</p>
+<!-- <input type="text" (keyup.enter)="onEnterName($event)"> -->
+<!-- 
+<label>Pesquisar por nome:</label>
+ <input type="text" [(ngModel)]="nome" (keyup.enter)="filtrar()">
 
-<table border="1">
+<label> Genero:</label>
+<select [(ngModel)]="genero" (change)="filtrar()">
+    <option value="">Selecione</option>
+    <option value="male">Masculino</option>
+    <option value="female">Feminino</option>
+    <option value="genderless">Sem gênero</option>
+    <option value="unknow">Desconhecido</option>
+</select>
+
+<label> Status:</label>
+<input type="radio" [(ngModel)]="status" (change)="filtrar()" name="status" value="alive">Vivo
+<input type="radio" [(ngModel)]="status" (change)="filtrar()" name="status" value="dead">Morto
+<input type="radio" [(ngModel)]="status" (change)="filtrar()" name="status" value="unknow">Desconhecido -->
+
+<br>
+
+<form [formGroup]="filter" (submit)="filtrar()">
+    <label>Pesquisar por nome:</label>
+    <input type="text" formControlName="nome">
+
+    <label> Genero:</label>
+    <select formControlName="genero">
+        <option value="">Selecione</option>
+        <option value="male">Masculino</option>
+        <option value="female">Feminino</option>
+        <option value="genderless">Sem gênero</option>
+        <option value="unknown">Desconhecido</option>
+    </select>
+
+    <label> Status:</label>
+    <input type="radio" formControlName="status" value="alive">Vivo
+    <input type="radio" formControlName="status" value="dead">Morto
+    <input type="radio" formControlName="status" value="unknown">Desconhecido
+
+    <button type="submit">Pesquisar</button>
+    <button (click)="filter.reset()">Limpar</button>
+</form>
+
+<br>
+<br>
+
+<button (click)="firstPage()" [disabled]="!prev">First</button>
+<button (click)="prevPage()" [disabled]="!prev">Prev</button>
+<button (click)="nextPage()" [disabled]="!next">Next</button>
+<button (click)="lastPage()" [disabled]="!next">Last</button>
+
+<br>
+<br>
+
+<!-- <table border="1" *ngIf="existeRegistro; else semRegistros"> -->
+<table border="1" *ngIf="existeRegistro">
     <thead>
         <tr>
-            <th>Coluna 1</th>
-            <th>Coluna 2</th>
-            <th>Coluna 3</th>
-            <th>Coluna 4</th>
-            <th>Coluna 5</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Species</th>
+            <th>Gender</th>
+            <th>Location Name</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Dado 1</td>
-            <td>Dado 2</td>
-            <td>Dado 3</td>
-            <td>Dado 4</td>
-            <td>Dado 5</td>
-        </tr>
-        <tr>
-            <td>Dado 6</td>
-            <td>Dado 7</td>
-            <td>Dado 8</td>
-            <td>Dado 9</td>
-            <td>Dado 10</td>
-        </tr>
+        <tr *ngFor="let personagem of personagens">
+            <td>{{ personagem.name }}</td>
+            <td>{{ personagem.type }}</td>
+            <td>{{ personagem.status }}</td>
+            <td>{{ personagem.species }}</td>
+            <td>{{ personagem.gender }}</td>
+            <td>{{ personagem.location!.name }}</td>
+        </tr>        
     </tbody>
 </table>
-<br>
-<br>
 
-{{ personagens | json }}
+<!-- <ng-template #semRegistros></ng-template> -->
+<h3 *ngIf="!existeRegistro">Nenhum registro encontrado.</h3>

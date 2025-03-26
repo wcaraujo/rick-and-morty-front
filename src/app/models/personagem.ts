@@ -1,5 +1,5 @@
 import { Localization } from "./localization";
-import { Origin } from "./Origin";
+import { Origin } from "./origin";
 
 export class Personagem {
     
