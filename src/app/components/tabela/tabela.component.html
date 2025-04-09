@@ -1,0 +1,75 @@
+<!-- <table border="1" *ngIf="existeRegistro; else semRegistros"> -->
+<!--    <table border="1" *ngIf="existeRegistro">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Species</th>
+                <th>Gender</th>
+                <th>Location Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let personagem of personagens">
+                <td>{{ personagem.name }}</td>
+                <td>{{ personagem.type }}</td>
+                <td>{{ personagem.status }}</td>
+                <td>{{ personagem.species }}</td>
+                <td>{{ personagem.gender }}</td>
+                <td>{{ personagem.location!.name }}</td>
+            </tr>        
+        </tbody>
+    </table>  -->
+    
+<!-- <ng-template #semRegistros></ng-template> -->
+<!-- <h3 *ngIf="!existeRegistro">Nenhum registro encontrado.</h3> -->
+
+
+<div class="pagination">
+    <button mat-mini-fab (click)="firstPage()" [disabled]="!prev">
+        <mat-icon>first_page</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="prevPage()" [disabled]="!prev">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="nextPage()" [disabled]="!next">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="lastPage()" [disabled]="!next">
+        <mat-icon>last_page</mat-icon>
+    </button>
+</div>
+
+<br>
+
+<table border="1" *ngIf="existeRegistro">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Species</th>
+            <th>Gender</th>
+            <th>Location Name</th>
+            <th>Ações</th>
+        </tr>
+    </thead> 
+    <tbody>
+        <tr *ngFor="let personagem of personagens">
+            <td>{{ personagem.name }}</td>
+            <td>{{ personagem.type }}</td>
+            <td>{{ personagem.status }}</td>
+            <td>{{ personagem.species }}</td>
+            <td>{{ personagem.gender }}</td>
+            <td>{{ personagem.location!.name }}</td>
+            <td>
+                <button mat-icon-button (click)="visualizaPersonagem(personagem)">
+                    <mat-icon>pageview</mat-icon>
+                </button>
+            </td>
+        </tr>        
+    </tbody>  
+</table>
+
+<h3 *ngIf="!existeRegistro">Nenhum registro encontrado.</h3>

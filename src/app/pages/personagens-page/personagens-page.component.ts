@@ -4,6 +4,7 @@ import { Personagem } from '../../models/personagem';
 import { Result } from '../../models/result';
 import { PersonagemFiltro } from '../../models/personagem-filtro';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personagens-page',
@@ -25,7 +26,8 @@ export class PersonagensPageComponent implements OnInit {
 
   constructor(
     private personagemService: PersonagensService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,10 +37,10 @@ export class PersonagensPageComponent implements OnInit {
       status: ['']
     });
 
-    this.firstPage();
+    this.primeiraPagina();
   }
 
-  prevPage(): void {
+  paginaAnterior(): void {
     this.personagemService.prev(this.prev!).subscribe((response: Result) => {
       this.personagens = response.results;
       this.prev = response.info.prev;
@@ -46,7 +48,7 @@ export class PersonagensPageComponent implements OnInit {
     });
   }
 
-  nextPage(): void {
+  proximaPagina(): void {
     this.personagemService.next(this.next!).subscribe((response: Result) => {
       this.personagens = response.results;
       this.prev = response.info.prev;
@@ -54,7 +56,7 @@ export class PersonagensPageComponent implements OnInit {
     });
   }
 
-  firstPage(): void {
+  primeiraPagina(): void {
     const filtro: PersonagemFiltro = this.filter?.getRawValue();
     
     if (!filtro.nome && !filtro.genero && !filtro.status) {
@@ -69,7 +71,7 @@ export class PersonagensPageComponent implements OnInit {
     }
   }
 
-  lastPage(): void {
+  ultimaPagina(): void {
     const filtro: PersonagemFiltro = this.filter.getRawValue();
     
     if (!filtro.nome && !filtro.genero && !filtro.status) {
@@ -115,4 +117,9 @@ export class PersonagensPageComponent implements OnInit {
       }
     );
   }
+
+  irParaDetalhesPersonagem(personagem: Personagem): void {
+    this.router.navigate(['personagens', personagem.id])
+  }
+
 }

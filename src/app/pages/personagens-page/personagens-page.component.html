@@ -20,8 +20,13 @@
 <br>
 
 <form [formGroup]="filter" (submit)="filtrar()">
-    <label>Pesquisar por nome:</label>
-    <input type="text" formControlName="nome">
+    <!-- 
+    <mat-form-field class="small" appearance="outline">
+        <mat-label>Pesquisar por nome</mat-label>
+        <input matInput type="text" placeholder="" formControlName="nome">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+    </mat-form-field>
 
     <label> Genero:</label>
     <select formControlName="genero">
@@ -37,22 +42,48 @@
     <input type="radio" formControlName="status" value="dead">Morto
     <input type="radio" formControlName="status" value="unknown">Desconhecido
 
-    <button type="submit">Pesquisar</button>
-    <button (click)="filter.reset()">Limpar</button>
+    <button mat-flat-button type="submit">Pesquisar</button>
+    <button mat-flat-button (click)="filter.reset()">Limpar</button>  -->
+
+    <mat-form-field class="small" appearance="outline">
+        <mat-label>Pesquisar por nome</mat-label>
+        <input matInput type="text" formControlName="nome" style="height: 20px !important;">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Gênero</mat-label>
+            <mat-select formControlName="genero">
+                <mat-option value="">Selecione</mat-option>
+                <mat-option value="male">Masculino</mat-option>
+                <mat-option value="female">Feminino</mat-option>
+                <mat-option value="genderless">Sem gênero</mat-option>
+                <mat-option value="unknow">Desconhecido</mat-option>
+            </mat-select>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="status">
+        <mat-label>Status</mat-label>
+        <mat-radio-button value="alive">Vivo</mat-radio-button>
+        <mat-radio-button value="dead">Morto</mat-radio-button>
+        <mat-radio-button value="unknow">Desconhecido</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="buttons">
+        <button mat-flat-button color="primary" type="submit">Pesquisar</button>
+        <button mat-flat-button color="accent" (click)="filter.reset()">Limpar</button>
+    </div>
 </form>
 
 <br>
 <br>
 
-<button (click)="firstPage()" [disabled]="!prev">First</button>
-<button (click)="prevPage()" [disabled]="!prev">Prev</button>
-<button (click)="nextPage()" [disabled]="!next">Next</button>
-<button (click)="lastPage()" [disabled]="!next">Last</button>
+<app-tabela [personagens]="personagens" [prev]="prev" [next]="next" (onFirstPage)="primeiraPagina()" (onPrevPage)="paginaAnterior()" (onNextPage)="proximaPagina()" (onLastPage)="ultimaPagina()" 
+    (onVisualize)="irParaDetalhesPersonagem($event)">
+</app-tabela>
 
-<br>
-<br>
 
 <!-- <table border="1" *ngIf="existeRegistro; else semRegistros"> -->
+<!-- 
 <table border="1" *ngIf="existeRegistro">
     <thead>
         <tr>
@@ -76,5 +107,5 @@
     </tbody>
 </table>
 
+<h3 *ngIf="!existeRegistro">Nenhum registro encontrado.</h3> -->
 <!-- <ng-template #semRegistros></ng-template> -->
-<h3 *ngIf="!existeRegistro">Nenhum registro encontrado.</h3>
